@@ -53,10 +53,9 @@ class CheckThread(powergslb.system.AbstractThread):
     def _do_exec(self):
         start = time.time()
         # rt_code = subprocess32.call(self.monitor['args'], timeout=self.monitor['timeout'])
-        p = Popen(self.monitor['args'], shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT,
-                  timeout=self.monitor['timeout'])
+        p = subprocess32.Popen(self.monitor['args'], shell=True, stdin=subprocess32.PIPE, stdout=subprocess32.PIPE, stderr=subprocess32.STDOUT)
         stdout, stderr = p.communicate()
-        rt_code = out.returncode
+        rt_code = p.returncode
         elapsed = time.time() - start
 
         logging.debug("content_id: %d - type: %s - elapsed: %f - stdout: %s", self.content_id, self.monitor['type'],
